@@ -1,0 +1,76 @@
+
+div {
+  text-align: center;
+}
+
+.land-container {
+  height:90vh;
+  padding:60px 40px;
+
+  .heading {
+    width:100%;
+    margin:auto;
+
+    h2 {
+      font-size:36px;
+    }
+  }
+  .headset {
+    opacity: 0;
+    img {
+      max-width:25%;
+      margin:auto;
+    }
+  }
+}
+
+.content {
+  div {
+    padding:60px 75px;
+    line-height: 40px;
+    text-align: left;
+  }
+  img {
+    border-radius: 80%;
+    width:100%;
+    height:auto;
+  }
+}
+
+@media screen and (min-width:600px) {
+  .heading {
+    width:70%!important;
+    h2 {
+      font-size:48px!important;
+    }
+  }
+}
+@media screen and (max-width:750px) {
+  .content {
+    div {
+      padding:10px 50px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0; transform:translateY(-50px)}
+  100% {opacity:1;transform:translateY(0)}
+}
+
+@keyframes scale {
+  0% {opacity:0; transform:translateY(-20px)}
+  50% {opacity:1}
+  75% {transform:translateY(0);opacity:1}
+  100% {opacity:1;transform:translateY(0)}
+}
+
+.fadeIn {
+  animation:fadeIn 0.7s ease-in;
+}
+
+.scale {
+  animation:scale 0.7s ease-in;
+  animation-fill-mode: forwards;
+  animation-delay:1s;
+}

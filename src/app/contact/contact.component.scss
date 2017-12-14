@@ -1,0 +1,48 @@
+.contact-section {
+  line-height: 40px;
+  margin:40px auto 80px auto;
+  width:90%;
+  overflow: hidden;
+
+  // .img {
+  //   background-image:url('../../assets/images/speak.jpg');
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+  //   background-position: top;
+  // }
+  div {
+    overflow: hidden;
+    position: relative;
+    max-height:275px;
+  }
+
+  div:nth-child(1) {
+    box-shadow:15px 0px 5px -5px rgba(0,0,0,0.5);
+    padding:10px 20px;
+    z-index:3;
+  }
+
+  div:nth-child(2) {
+    z-index:2;
+    display: block;
+    transform:translate(0, 0)!important;
+  }
+
+  img {
+    width:100%;
+    height:auto;
+    display:block;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .contact-section {
+    div:nth-child(1) {
+      box-shadow:0px 15px 5px -5px rgba(0,0,0,0.5)!important;
+    }
+    div:nth-child(2) {
+      transform:translate(0, 0)!important;
+    }
+  }
+
+}
