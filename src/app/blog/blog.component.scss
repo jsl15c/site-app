@@ -1,0 +1,24 @@
+.row {
+  width:80%;
+  margin: auto;
+  .post {
+    
+    h3 {
+      letter-spacing:0;
+    }
+
+    a {
+      border-bottom:2px solid rgb(221, 216, 109);
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    img {
+      max-width: 400px;
+      width:100%;
+    }
+  }
+}
+
+@media screen and (max-width:600px) {
+}

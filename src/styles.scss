@@ -39,8 +39,17 @@ li {
   list-style-type: none;
 }
 
+.col {
+  padding:15px;
+}
+
 .col-1-2 {
   width:50%;
+  overflow: hidden;
+}
+
+.col-1-3 {
+  width:33.3333%;
   overflow: hidden;
 }
 
@@ -52,11 +61,22 @@ li {
   float:right;
 }
 
+.row {
+  width:80%;
+  margin:50px auto;
+}
+
 @media screen and (max-width:600px) {
   .left, .right {
     float:none;
   }
+  .col {
+    width:100%!important;
+  }
   .col-1-2 {
     width:100%;
+  }
+  .row {
+    width:90%;
   }
 }

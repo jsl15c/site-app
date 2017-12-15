@@ -4,11 +4,10 @@ div {
 }
 
 .land-container {
-  height:90vh;
-  padding:60px 40px;
+  padding:60px 0px 0px 0px;
 
   .heading {
-    width:100%;
+    max-width:750px;
     margin:auto;
 
     h2 {
@@ -24,16 +23,13 @@ div {
   }
 }
 
-.content {
+.row:nth-child(2) {
   div {
-    padding:60px 75px;
     line-height: 40px;
     text-align: left;
   }
   img {
-    border-radius: 80%;
-    width:100%;
-    height:auto;
+    width:50%;
   }
 }
 
@@ -46,11 +42,7 @@ div {
   }
 }
 @media screen and (max-width:750px) {
-  .content {
-    div {
-      padding:10px 50px;
-    }
-  }
+
 }
 
 @keyframes fadeIn {
