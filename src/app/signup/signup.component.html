@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="signup">
+    <form *ngIf="!enterCode" [ngClass]="{fadeIn:isLoaded}">
+      <label for="first-input">First Name</label>
+      <input id="first-input"
+      [(ngModel)]="firstName" name="firstName"/>
+      <br />
+      <label for="last-input">Last Name</label>
+      <input id="last-input"
+      [(ngModel)]="lastName" name="lastName"/>
+      <br />
+      <label for="email-input">Email</label>
+      <input id="email-input" type="email"
+      [(ngModel)]="email" name="email"/>
+      <br />
+
+      <div [ngClass]="{selected:isPatient}"
+      (click)="selectUser()" class="box">
+        Patient
+      </div>
+      <div [ngClass]="{selected:!isPatient}"
+            (click)="selectUser()" class="box">
+          Professional
+      </div>
+      <button (click)="signup()">Sign Up</button>
+    </form>
+
+
+    <form *ngIf="enterCode" [ngClass]="{fadeIn:isLoaded}">
+      <h4>Enter code</h4>
+      <label for="code-input">Verification code:</label>
+      <input id="code-input"
+      [(ngModel)]="emailCode" name="emailCode"/>
+
+      <button (click)="verify()">Verify</button>
+    </form>
+  </div>
+</div>

@@ -7,9 +7,11 @@ import {BlogComponent} from '../blog/blog.component';
   styleUrls: ['./home.component.min.css']
 })
 export class HomeComponent implements OnInit {
-  isLoaded:boolean = false;
 
-  constructor() { }
+  isLoaded:Boolean = false;
+
+  constructor(
+  ) { }
 
   ngOnInit() {
     this.isLoaded = true;
