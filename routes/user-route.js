@@ -36,7 +36,6 @@ router.post('/signup', (req, res, next) => {
       }
       if (user) {
         res.status(400).json({message:'Email is already in use'});
-        console.log('asdasasdasdaasddasd');
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -75,7 +74,6 @@ router.post('/signup', (req, res, next) => {
 router.post('/verify', (req, res, next) => {
   if (req.body.emailCode.length != 6) {
     res.status(400).json({message:'The code is missing a few numbers'});
-    console.log('asdasdasd');
     return;
   }
   else {
@@ -83,7 +81,7 @@ router.post('/verify', (req, res, next) => {
       {emailCode:req.body.emailCode},
       (err, user) => {
         if (err) {
-          res.status(500).json({message:'Server error'});
+          res.status(400).json({message:'The code is incorrect. Please try again.'});
           return;
         }
         if (user) {
