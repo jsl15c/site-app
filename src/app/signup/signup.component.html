@@ -1,21 +1,27 @@
 <div class="row">
+  <h2>Join the mailing list!</h2>
+  <div class="head-line"></div>
   <div class="signup">
     <form *ngIf="!enterCode" [ngClass]="{fadeIn:isLoaded}">
+
+<div class="inline-input">
       <label for="first-input">First Name</label>
       <input id="first-input"
       [(ngModel)]="firstName" name="firstName"/>
-      <br />
+</div>
+<div class="inline-input">
       <label for="last-input">Last Name</label>
       <input id="last-input"
       [(ngModel)]="lastName" name="lastName"/>
-      <br />
-      <label for="email-input">Email</label>
+</div>
+      <label for="email-input">Email</label><br />
       <input id="email-input" type="email"
       [(ngModel)]="email" name="email"/>
-      <br />
 
+
+      <h4>I am a:</h4>
       <div [ngClass]="{selected:isPatient}"
-      (click)="selectUser()" class="box">
+      (click)="selectUser()" class="box p">
         Patient
       </div>
       <div [ngClass]="{selected:!isPatient}"

@@ -1,32 +1,66 @@
 form {
-  // position: relative;
-  // width:70%;
-  // margin:auto;
+  position: relative;
 }
 
 input {
   color:#000;
 }
 
+label {
+
+}
+
+.inline-input {
+  display:inline-block;
+  overflow:hidden;
+  width:49%;
+}
+
+#email-input {
+  width:100%;
+}
+
+.signup {
+  max-width:400px;
+  margin:auto;
+  padding-top:40px;
+
+  button {
+    display: block;
+    position: relative;
+    top:10px;
+    width:100%;
+    background: transparent;
+    padding:20px;
+    display: block;
+    border:3px solid #fff;
+  }
+
+  button:hover {
+    background:green;
+}
+.selected {
+  background: green;
+  transition:0.3s ease-in;
+}
+
+}
+
 .box {
   padding:20px;
-  margin:20px 20px 20px 0;
-  max-width:150px;
-  width:100%;
-  background: grey;
-  display: inline-block;
+  width:49%;
+  // display: inline-block;
+  float:left;
   text-align: center;
+  cursor:pointer;
+  border:3px solid #fff;
+}
+.box.p {
+  margin-right:2%;
 }
 
-.selected {
-  background:green!important;
-}
-
-button {
-  display: block;
-  background:green;
-}
-
-input[type="radio"] {
-
+.row {
+  h2 {
+    text-align:center;
+  }
 }

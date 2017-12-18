@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BlogComponent} from '../blog/blog.component';
+import {SignupComponent} from '../signup/signup.component';
 
 @Component({
   selector: 'app-home',
