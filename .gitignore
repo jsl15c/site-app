@@ -30,4 +30,5 @@ node_modules
 npm-debug.log
 
 # email credentials
-config/nodemailer-config.js
+# config/nodemailer-config.js
+.env
