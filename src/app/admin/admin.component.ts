@@ -16,6 +16,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.checkLogin();
+    this.list();
   }
 
   checkLogin() {
@@ -31,6 +32,20 @@ export class AdminComponent implements OnInit {
   .catch((err) => {
     if(err) {
       this.router.navigate(['/']);
+      return;
+    }
+  });
+}
+
+list() {
+  this.userService.list()
+  .then((resultFromApi) => {
+    console.log('result ' + resultFromApi);
+    this.userService.allUsers = resultFromApi;
+  })
+  .catch((err) => {
+    if (err) {
+      console.log(err);
       return;
     }
   });

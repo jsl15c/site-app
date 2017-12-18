@@ -11,6 +11,8 @@ export class UserService {
 
   currentUser: any = {};
 
+  allUsers:any = [];
+
   constructor(private myHttp: Http) { }
 
   // POST signup
@@ -65,6 +67,16 @@ export class UserService {
   checklogin() {
     return this.myHttp.get(
       environment.apiBase + '/user-api/checklogin',
+      // send cookies across domains
+      {withCredentials:true},
+    )
+    .toPromise()
+    .then(res => res.json());
+  }
+
+  list() {
+    return this.myHttp.get(
+      environment.apiBase + '/user-api/list',
       // send cookies across domains
       {withCredentials:true},
     )
