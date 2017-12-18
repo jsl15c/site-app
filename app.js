@@ -66,9 +66,9 @@ app.use((req, res, next) => {
 const userApi = require('./routes/user-route');
 app.use('/user-api', userApi);
 
-// app.use((req, res, next) => {
-//   res.sendFile(__dirname+'/public/index.html');
-// });
+app.use((req, res, next) => {
+  res.sendFile(__dirname+'/public/index.html');
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
