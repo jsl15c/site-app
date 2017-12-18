@@ -6,6 +6,8 @@ const router = express.Router();
 
 const UserModel = require('../models/user-model');
 
+const mailConfig = require('../config/nodemailer-config.js');
+
 // GET all users
 router.get('/list', (req, res, next) => {
   UserModel.find((err, userList) => {
@@ -13,7 +15,7 @@ router.get('/list', (req, res, next) => {
       res.json(err);
       return;
     }
-    res.json(userList);
+    res.status(200).json(userList);
   });
 });
 
@@ -32,13 +34,11 @@ router.post('/signup', (req, res, next) => {
         res.status(500).json({message:'Server error'});
         return;
       }
-
       if (user) {
         res.status(400).json({message:'Email is already in use'});
         console.log('asdasasdasdaasddasd');
         return;
       }
-
       const salt = bcrypt.genSaltSync(10);
       const hashedpassword = '';
       if (!req.body.password) {
@@ -47,7 +47,6 @@ router.post('/signup', (req, res, next) => {
       else {
         hashedPassword = bcrypt.hashSync(req.body.password, salt);
       }
-
       const newUser = new UserModel({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -56,7 +55,6 @@ router.post('/signup', (req, res, next) => {
         userType:req.body.userType,
         emailCode:randomDigits()
       });
-
       newUser.save((err) => {
         if (err) {
           console.log(err);
@@ -64,6 +62,7 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
+        sendMail(newUser.email, newUser.emailCode);
         newUser.password = undefined;
         // send users info to front end except password ^
         res.status(200).json(newUser);
@@ -71,6 +70,7 @@ router.post('/signup', (req, res, next) => {
     }
   );
 });
+
 
 router.post('/verify', (req, res, next) => {
   if (req.body.emailCode.length != 6) {
@@ -200,6 +200,29 @@ function randomDigits() {
     numStr += (Math.round(Math.random()*(9)));
   }
   return numStr;
+}
+
+function sendMail(email, code) {
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport(mailConfig);
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"EMDR VR" <jarrod@emdrvr.com>', // sender address
+    to: email,
+    subject: 'Email Verification', // Subject line
+    text: code // plain text body
+    // html: '<b>Hello world?</b>' // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  });
 }
 
 module.exports = router;
