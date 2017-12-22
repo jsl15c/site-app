@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
+const validator    = require('email-validator');
 const router = express.Router();
 
 const UserModel = require('../models/user-model');
@@ -22,11 +23,13 @@ router.get('/list', (req, res, next) => {
 // POST signup
 router.post('/signup', (req, res, next) => {
   if(!req.body.firstName || !req.body.lastName||
-     !req.body.email) {
+     !req.body.email || !req.body.userType) {
        res.status(400).json({message:'All fields are required'});
        console.log('asdasdasd');
        return;
   }
+  console.log(validator.validate("test@email.com"));
+  console.log(validator.validate("akdsflkasjhd"));
   UserModel.findOne(
     {email:req.body.email},
     (err, user) => {
@@ -34,8 +37,12 @@ router.post('/signup', (req, res, next) => {
         res.status(500).json({message:'Server error'});
         return;
       }
-      if (user) {
-        res.status(400).json({message:'Email is already in use'});
+      else if (user) {
+        res.status(400).json({message:'Email is already subscribed'});
+        return;
+      }
+      else if (!validator.validate(req.body.email)) {
+        res.status(400).json({message:'Please enter a valid email'});
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -52,6 +59,7 @@ router.post('/signup', (req, res, next) => {
         email:req.body.email,
         password:hashedPassword,
         userType:req.body.userType,
+        otherType:req.body.otherType,
         emailCode:randomDigits()
       });
       newUser.save((err) => {
