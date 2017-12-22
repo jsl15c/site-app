@@ -21,7 +21,12 @@ const userSchema = new Schema (
   },
   userType:{
     type:String,
-    default:'patient'
+    default:'patient',
+    required:true
+  },
+  otherType: {
+    type:String,
+    default:'other'
   },
   emailCode:{
     type:String

@@ -10,6 +10,7 @@ const session      = require('express-session');  // ORDER MATTERS
 const passport     = require('passport');         // SESSION THEN PASSPORT
 const cors         = require('cors');
 const nodemailer         = require('nodemailer');
+const validator    = require('email-validator');
 
 require('dotenv').config();
 // run all the code inside "passport-config.js"
