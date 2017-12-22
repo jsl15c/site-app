@@ -26,10 +26,10 @@ const routes: Routes = [
     path: 'contact',
     component: ContactComponent
   },
-  // {
-  //   path: 'signup',
-  //   component: SignupComponent
-  // },
+  {
+    path: 'signup',
+    component: SignupComponent
+  },
   {
     path: 'login',
     component: LoginComponent

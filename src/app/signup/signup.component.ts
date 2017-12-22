@@ -14,15 +14,20 @@ export class SignupComponent implements OnInit {
   lastName:string;
   email:string;
   password:string;
-  userType:string;
+  userType:string = 'patient';
   emailCode:string;
   errorMsg:string;
   isPatient:boolean = true;
+
+  showForm:boolean = true;
   enterCode:boolean = false;
+  verified:boolean = false;
+
+  types:any[] = ['doctor', 'patient', 'practice', 'investor'];
 
 
   constructor(
-    private userService:UserService,
+    public userService:UserService,
     private router: Router
   ) { }
 
@@ -51,9 +56,9 @@ export class SignupComponent implements OnInit {
         this.password = "";
         this.errorMsg = "";
         this.enterCode = true;
+        this.showForm = false;
       })
       .catch((err) => {
-        alert('error submitting');
         const parsedError = err.json();
         this.errorMsg = parsedError.message;
       });
@@ -64,10 +69,15 @@ export class SignupComponent implements OnInit {
         .then((resultFromApi) => {
           this.emailCode = "";
           this.errorMsg = "";
+          this.enterCode = false;
+          this.verified = true;
+          setTimeout(()=> {
+            this.showForm = true;
+            this.verified = false;
+          }, 5000)
           this.router.navigate(['/']);
         })
         .catch((err) => {
-          alert('error submitting');
           const parsedError = err.json();
           this.errorMsg = parsedError.message;
         });

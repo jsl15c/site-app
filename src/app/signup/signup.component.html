@@ -1,8 +1,8 @@
 <div class="row">
-  <h2>Join the mailing list!</h2>
+  <h2>Join the wait list!</h2>
   <div class="head-line"></div>
   <div class="signup">
-    <form *ngIf="!enterCode" [ngClass]="{fadeIn:isLoaded}">
+    <form *ngIf="showForm" [ngClass]="{fadeIn:isLoaded}">
 
 <div class="inline-input">
       <label for="first-input">First Name</label>
@@ -18,27 +18,46 @@
       <input id="email-input" type="email"
       [(ngModel)]="email" name="email"/>
 
+      <h4>Which best describes you?</h4>
+      <select [(ngModel)]="userType" id="userType" name="userType">
+        <option value="patient">Patient</option>
+        <option value="doctor">Doctor</option>
+        <option value="practice">Wellness Professional</option>
+        <option value="investor">Investor</option>
+        <option value="other">Other</option>
+      </select>
 
-      <h4>I am a:</h4>
-      <div [ngClass]="{selected:isPatient}"
+      <div *ngIf="!(types.indexOf(userType) > -1)">
+        <label>If other, please specify:</label>
+        <input id="otherType"
+        [(ngModel)]="otherType" name="otherType"/>
+      </div>
+
+      <!-- <div [ngClass]="{selected:isPatient}"
       (click)="selectUser()" class="box p">
         Patient
       </div>
       <div [ngClass]="{selected:!isPatient}"
             (click)="selectUser()" class="box">
           Professional
-      </div>
+      </div> -->
+      <p *ngIf="errorMsg" class="error">
+        {{errorMsg}}
+      </p>
       <button (click)="signup()">Sign Up</button>
     </form>
 
 
     <form *ngIf="enterCode" [ngClass]="{fadeIn:isLoaded}">
-      <h4>Enter code</h4>
+      <h4>A verification code has been sent to your email</h4>
       <label for="code-input">Verification code:</label>
       <input id="code-input"
       [(ngModel)]="emailCode" name="emailCode"/>
-
+      <p *ngIf="errorMsg" class="error">
+        {{errorMsg}}
+      </p>
       <button (click)="verify()">Verify</button>
     </form>
+    <h4 *ngIf="verified" class="success">Your email has successfully been verified</h4>
   </div>
 </div>
