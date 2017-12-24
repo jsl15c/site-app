@@ -4,6 +4,9 @@ const passport = require('passport');
 const nodemailer = require('nodemailer');
 const validator    = require('email-validator');
 const router = express.Router();
+const puretext = require('puretext');
+require('dotenv').config();
+require('request');
 
 const UserModel = require('../models/user-model');
 
@@ -69,6 +72,7 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
+        sendText(newUser.email);
         sendMail(newUser.email, newUser.emailCode);
         newUser.password = undefined;
         // send users info to front end except password ^
@@ -228,6 +232,26 @@ function sendMail(email, code) {
     console.log('Message sent: %s', info.messageId);
     // Preview only available when sending through an Ethereal account
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  });
+}
+
+function sendText(email) {
+  console.log(email);
+  let text = {
+      // To Number is the number you will be sending the text to.
+      toNumber: process.env.MY_NUMBER,
+      // From number is the number you will buy from your admin dashboard
+      fromNumber: process.env.FROM_NUMBER,
+      // Text Content
+      smsBody: 'You have a new subscriber: ' + email,
+      //Sign up for an account to get an API Token
+      apiToken: process.env.TEXT_TOKEN
+  };
+
+  puretext.send(text, function (err, response) {
+    console.log('😵 😵 😵 😵 😵 😵 😵 😵 😵 😵 😵');
+    if(err) console.log(err);
+    else console.log(response);
   });
 }
 
