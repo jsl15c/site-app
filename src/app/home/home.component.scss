@@ -1,10 +1,9 @@
-
 div {
   text-align: center;
 }
 
 .land-container {
-  height:80vh;
+  min-height:80vh;
 
   div {
     opacity: 0;
@@ -19,9 +18,21 @@ div {
     }
   }
   .headset {
+    text-align: center;
     img {
       max-width:25%;
       margin:auto;
+    }
+    a {
+      display: block;
+      margin:auto;
+      font-size:18px;
+    -webkit-text-emphasis-color: aquamarine;
+    -webkit-text-emphasis-style: circle;
+    -webkit-text-emphasis-position: over;
+    text-emphasis-color: aquamarine;
+    text-emphasis-style: circle;
+    text-emphasis-position: over;
     }
   }
 }
@@ -47,8 +58,12 @@ div {
     }
   }
 }
-@media screen and (max-width:750px) {
-
+@media screen and (max-width:600px) {
+  .headset {
+    img {
+      max-width: 50%!important;
+    }
+  }
 }
 
 @keyframes fadeIn {

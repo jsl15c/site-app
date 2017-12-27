@@ -27,6 +27,7 @@ export class AdminComponent implements OnInit {
       if (resultFromApi.userType === "admin") {
         this.router.navigate(['/admin']);
         this.userService.currentUser = resultFromApi;
+        return;
       }
   })
   .catch((err) => {

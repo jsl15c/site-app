@@ -1,7 +1,21 @@
+.scroll-table {
+  overflow-x: scroll;
+}
+
 .verify {
   background:rgb(150, 0, 0)
 }
 
 .verified {
   background: rgb(0, 150, 0);
+}
+
+tr {
+  th {
+    text-align: left;
+    padding:10px;
+  }
+  td {
+    padding:10px;
+  }
 }
