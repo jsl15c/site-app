@@ -4,7 +4,6 @@ const passport = require('passport');
 const nodemailer = require('nodemailer');
 const validator    = require('email-validator');
 const router = express.Router();
-const puretext = require('puretext');
 require('dotenv').config();
 require('request');
 
@@ -236,23 +235,38 @@ function sendMail(email, code) {
 }
 
 function sendText(email) {
-  console.log(email);
-  let text = {
-      // To Number is the number you will be sending the text to.
-      toNumber: process.env.MY_NUMBER,
-      // From number is the number you will buy from your admin dashboard
-      fromNumber: process.env.FROM_NUMBER,
-      // Text Content
-      smsBody: 'You have a new subscriber: ' + email,
-      //Sign up for an account to get an API Token
-      apiToken: process.env.TEXT_TOKEN
-  };
+console.log(email);
 
-  puretext.send(text, function (err, response) {
-    console.log('😵 😵 😵 😵 😵 😵 😵 😵 😵 😵 😵');
-    if(err) console.log(err);
-    else console.log(response);
+  // Twilio Credentials
+let accountSid = process.env.ACCOUNT_NUM;
+let authToken = process.env.AUTH_TOKEN;
+
+//require the Twilio module and create a REST client
+let client = require('twilio')(accountSid, authToken);
+
+UserModel.find((err, userList) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  client.messages.create({
+    to: process.env.MY_NUMBER,
+    from: process.env.FROM_NUMBER,
+    body: "\n New subscriber: " + email + "\n" +
+    "Total: " + userList.length + "\n",
+  },
+  function(err, message) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(message.sid);
+    return;
   });
+});
+
+
+
 }
 
 module.exports = router;
