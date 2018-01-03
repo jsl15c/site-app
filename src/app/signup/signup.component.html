@@ -1,6 +1,6 @@
 <div class="row">
   <h2>Join the wait list!</h2>
-  ({{2000 - userService.allUsers.length}} left of 2000)
+  <span>{{2000 - userService.allUsers.length}} spots left!</span>
   <div class="head-line"></div>
   <div class="signup">
     <form *ngIf="showForm" [ngClass]="{fadeIn:isLoaded}">
