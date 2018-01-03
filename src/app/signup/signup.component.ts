@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
 
 
 @Component({
@@ -29,8 +28,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     public userService:UserService,
-    private router: Router,
-    public homeComp:HomeComponent
+    private router: Router
   ) { }
 
   ngOnInit() {
