@@ -5,7 +5,6 @@ const nodemailer = require('nodemailer');
 const validator    = require('email-validator');
 const router = express.Router();
 require('dotenv').config();
-require('request');
 
 const UserModel = require('../models/user-model');
 
