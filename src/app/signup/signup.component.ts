@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { HomeComponent } from '../home/home.component';
 
 
 @Component({
@@ -28,10 +29,12 @@ export class SignupComponent implements OnInit {
 
   constructor(
     public userService:UserService,
-    private router: Router
+    private router: Router,
+    public homeComp:HomeComponent
   ) { }
 
   ngOnInit() {
+    this.list();
   }
 
   selectUser() {
@@ -80,6 +83,17 @@ export class SignupComponent implements OnInit {
         .catch((err) => {
           const parsedError = err.json();
           this.errorMsg = parsedError.message;
+        });
+      }
+
+      list() {
+        this.userService.list()
+        .then((result) => {
+          this.userService.allUsers = result;
+        })
+        .catch((err)=> {
+          const parsedError = err.json();
+          this.errorMsg = parsedError;
         });
       }
 }
