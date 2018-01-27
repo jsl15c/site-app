@@ -26,7 +26,7 @@ const userSchema = new Schema (
   },
   otherType: {
     type:String,
-    default:'other'
+    default:'n/a'
   },
   channelType: {
     type:String,
@@ -35,7 +35,7 @@ const userSchema = new Schema (
   },
   otherChannel: {
     type:String,
-    default:'other'
+    default:'n/a'
   },
   emailCode:{
     type:String

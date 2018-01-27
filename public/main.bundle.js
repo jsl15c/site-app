@@ -852,7 +852,7 @@ var UserService = (function () {
     }
     // POST signup
     //  an argument for each req.body in API route
-    UserService.prototype.signup = function (firstName, lastName, email, userType, channelType, password) {
+    UserService.prototype.signup = function (firstName, lastName, email, userType, channelType, otherType, otherChannel, password) {
         return this.myHttp
             .post(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiBase + '/user-api/signup', 
         // form body info to send to backend (req.body)
@@ -862,7 +862,9 @@ var UserService = (function () {
             email: email,
             password: password,
             userType: userType,
-            channelType: channelType
+            otherType: otherType,
+            channelType: channelType,
+            otherChannel: otherChannel
         }, 
         // send cookies across domains
         { withCredentials: true })
@@ -986,13 +988,15 @@ var SignupComponent = (function () {
     };
     SignupComponent.prototype.signup = function () {
         var _this = this;
-        this.userService.signup(this.firstName, this.lastName, this.email, this.userType, this.channelType, this.password)
+        this.userService.signup(this.firstName, this.lastName, this.email, this.userType, this.channelType, this.otherType, this.otherChannel, this.password)
             .then(function (resultFromApi) {
             _this.firstName = "";
             _this.lastName = "";
             _this.email = "";
             _this.userType = "";
             _this.channelType = "";
+            _this.otherType = "";
+            _this.otherChannel = "";
             _this.password = "";
             _this.errorMsg = "";
             _this.enterCode = true;
