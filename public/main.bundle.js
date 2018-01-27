@@ -852,7 +852,7 @@ var UserService = (function () {
     }
     // POST signup
     //  an argument for each req.body in API route
-    UserService.prototype.signup = function (firstName, lastName, email, userType, password) {
+    UserService.prototype.signup = function (firstName, lastName, email, userType, channelType, password) {
         return this.myHttp
             .post(__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiBase + '/user-api/signup', 
         // form body info to send to backend (req.body)
@@ -861,7 +861,8 @@ var UserService = (function () {
             lastName: lastName,
             email: email,
             password: password,
-            userType: userType
+            userType: userType,
+            channelType: channelType
         }, 
         // send cookies across domains
         { withCredentials: true })
@@ -915,7 +916,7 @@ var _a;
 /***/ "../../../../../src/app/signup/signup.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <h2>Join the wait list!</h2>\n  <span>{{2000 - userService.allUsers.length}} spots left!</span>\n  <div class=\"head-line\"></div>\n  <div class=\"signup\">\n    <form *ngIf=\"showForm\" [ngClass]=\"{fadeIn:isLoaded}\">\n\n<div class=\"inline-input\">\n      <label for=\"first-input\">First Name</label>\n      <input id=\"first-input\"\n      [(ngModel)]=\"firstName\" name=\"firstName\"/>\n</div>\n<div class=\"inline-input\">\n      <label for=\"last-input\">Last Name</label>\n      <input id=\"last-input\"\n      [(ngModel)]=\"lastName\" name=\"lastName\"/>\n</div>\n      <label for=\"email-input\">Email</label><br />\n      <input id=\"email-input\" type=\"email\"\n      [(ngModel)]=\"email\" name=\"email\"/>\n\n      <h4>Which best describes you?</h4>\n      <select [(ngModel)]=\"userType\" id=\"userType\" name=\"userType\">\n        <option value=\"patient\">Patient</option>\n        <option value=\"doctor\">Doctor</option>\n        <option value=\"practice\">Wellness Professional</option>\n        <option value=\"investor\">Investor</option>\n        <option value=\"other\">Other</option>\n      </select>\n\n      <div *ngIf=\"!(types.indexOf(userType) > -1)\">\n        <label>If other, please specify:</label>\n        <input id=\"otherType\"\n        [(ngModel)]=\"otherType\" name=\"otherType\"/>\n      </div>\n\n      <!-- <div [ngClass]=\"{selected:isPatient}\"\n      (click)=\"selectUser()\" class=\"box p\">\n        Patient\n      </div>\n      <div [ngClass]=\"{selected:!isPatient}\"\n            (click)=\"selectUser()\" class=\"box\">\n          Professional\n      </div> -->\n      <p *ngIf=\"errorMsg\" class=\"error\">\n        {{errorMsg}}\n      </p>\n      <button (click)=\"signup()\">Sign Up</button>\n    </form>\n\n\n    <form *ngIf=\"enterCode\" [ngClass]=\"{fadeIn:isLoaded}\">\n      <h4>A verification code has been sent to your email</h4>\n      <label for=\"code-input\">Verification code:</label>\n      <input id=\"code-input\"\n      [(ngModel)]=\"emailCode\" name=\"emailCode\"/>\n      <p *ngIf=\"errorMsg\" class=\"error\">\n        {{errorMsg}}\n      </p>\n      <button (click)=\"verify()\">Verify</button>\n    </form>\n    <h4 *ngIf=\"verified\" class=\"success\">Your email has successfully been verified</h4>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <h2>Join the wait list!</h2>\n  <span>{{2000 - userService.allUsers.length}} spots left!</span>\n  <div class=\"head-line\"></div>\n  <div class=\"signup\">\n    <form *ngIf=\"showForm\" [ngClass]=\"{fadeIn:isLoaded}\">\n\n<div class=\"inline-input\">\n      <label for=\"first-input\">First Name</label>\n      <input id=\"first-input\"\n      [(ngModel)]=\"firstName\" name=\"firstName\"/>\n</div>\n<div class=\"inline-input\">\n      <label for=\"last-input\">Last Name</label>\n      <input id=\"last-input\"\n      [(ngModel)]=\"lastName\" name=\"lastName\"/>\n</div>\n      <label for=\"email-input\">Email</label><br />\n      <input id=\"email-input\" type=\"email\"\n      [(ngModel)]=\"email\" name=\"email\"/>\n\n      <h4>Which best describes you?</h4>\n      <select [(ngModel)]=\"userType\" id=\"userType\" name=\"userType\">\n        <option value=\"patient\">Patient</option>\n        <option value=\"doctor\">Doctor</option>\n        <option value=\"wellness professional\">Wellness Professional</option>\n        <option value=\"investor\">Investor</option>\n        <option value=\"other\">Other</option>\n      </select>\n\n      <div *ngIf=\"!(types.indexOf(userType) > -1)\">\n        <label>If other, please specify:</label>\n        <input id=\"otherType\"\n        [(ngModel)]=\"otherType\" name=\"otherType\"/>\n      </div>\n\n      <h4>How did you find us?</h4>\n      <select [(ngModel)]=\"channelType\" id=\"channelType\" name=\"channelType\">\n        <option value=\"word of mouth\">Word of Mouth</option>\n        <option value=\"search\">Search</option>\n        <option value=\"social media\">Social Media</option>\n        <option value=\"other\">Other</option>\n      </select>\n\n      <div *ngIf=\"!(channels.indexOf(channelType) > -1)\">\n        <label>If other, please specify:</label>\n        <input id=\"otherChannel\"\n        [(ngModel)]=\"otherChannel\" name=\"otherChannel\"/>\n      </div>\n\n      <!-- <div [ngClass]=\"{selected:isPatient}\"\n      (click)=\"selectUser()\" class=\"box p\">\n        Patient\n      </div>\n      <div [ngClass]=\"{selected:!isPatient}\"\n            (click)=\"selectUser()\" class=\"box\">\n          Professional\n      </div> -->\n      <p *ngIf=\"errorMsg\" class=\"error\">\n        {{errorMsg}}\n      </p>\n      <button (click)=\"signup()\">Sign Up</button>\n    </form>\n\n\n    <form *ngIf=\"enterCode\" [ngClass]=\"{fadeIn:isLoaded}\">\n      <h4>A verification code has been sent to your email</h4>\n      <label for=\"code-input\">Verification code:</label>\n      <input id=\"code-input\"\n      [(ngModel)]=\"emailCode\" name=\"emailCode\"/>\n      <p *ngIf=\"errorMsg\" class=\"error\">\n        {{errorMsg}}\n      </p>\n      <button (click)=\"verify()\">Verify</button>\n    </form>\n    <h4 *ngIf=\"verified\" class=\"success\">Your email has successfully been verified</h4>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -927,7 +928,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".row .signup{max-width:400px;margin:auto;padding-top:40px}.row .signup form{position:relative;overflow:hidden;min-height:65vh}.row .signup form input{color:#000;width:100%}.row .signup form option{color:#000}.row .signup form .inline-input{float:left;overflow:hidden;width:50%;padding-bottom:10px}.row .signup form .inline-input:nth-child(1){padding-right:5px}.row .signup form .inline-input:nth-child(2){padding-left:5px}.row .signup form #email-input{width:100%}.row .signup form select{color:#000;width:100%}.row .signup form select option{background:#fff;border:1px solid #000}.row .signup form button{display:block;position:relative;top:10px;width:100%;background:transparent;padding:20px;display:block;border:3px solid #fff}.row .signup form button:hover{background:green}.row .signup form .selected{background:green;transition:0.3s ease-in}.row .signup form .box{padding:20px;width:49%;float:left;text-align:center;cursor:pointer;border:3px solid #fff;overflow:hidden}.row .signup form .box.p{margin-right:2%}.row .signup form h2{text-align:center}.row .signup form h4{margin-bottom:0}\n", ""]);
+exports.push([module.i, ".row .signup{max-width:400px;margin:auto;padding-top:40px}.row .signup form{position:relative;overflow:hidden;min-height:71vh}.row .signup form input{color:#000;width:100%}.row .signup form option{color:#000}.row .signup form .inline-input{float:left;overflow:hidden;width:50%;padding-bottom:10px}.row .signup form .inline-input:nth-child(1){padding-right:5px}.row .signup form .inline-input:nth-child(2){padding-left:5px}.row .signup form #email-input{width:100%}.row .signup form select{color:#000;width:100%}.row .signup form select option{background:#fff;border:1px solid #000}.row .signup form button{display:block;position:relative;top:10px;width:100%;background:transparent;padding:20px;display:block;border:3px solid #fff}.row .signup form button:hover{background:green}.row .signup form .selected{background:green;transition:0.3s ease-in}.row .signup form .box{padding:20px;width:49%;float:left;text-align:center;cursor:pointer;border:3px solid #fff;overflow:hidden}.row .signup form .box.p{margin-right:2%}.row .signup form h2{text-align:center}.row .signup form h4{margin-bottom:0}\n", ""]);
 
 // exports
 
@@ -962,11 +963,13 @@ var SignupComponent = (function () {
         this.userService = userService;
         this.router = router;
         this.userType = 'patient';
+        this.channelType = 'search';
         this.isPatient = true;
         this.showForm = true;
         this.enterCode = false;
         this.verified = false;
-        this.types = ['doctor', 'patient', 'practice', 'investor'];
+        this.types = ['doctor', 'patient', 'wellness professional', 'investor'];
+        this.channels = ['word of mouth', 'search', 'social media'];
     }
     SignupComponent.prototype.ngOnInit = function () {
         this.list();
@@ -983,12 +986,13 @@ var SignupComponent = (function () {
     };
     SignupComponent.prototype.signup = function () {
         var _this = this;
-        this.userService.signup(this.firstName, this.lastName, this.email, this.userType, this.password)
+        this.userService.signup(this.firstName, this.lastName, this.email, this.userType, this.channelType, this.password)
             .then(function (resultFromApi) {
             _this.firstName = "";
             _this.lastName = "";
             _this.email = "";
             _this.userType = "";
+            _this.channelType = "";
             _this.password = "";
             _this.errorMsg = "";
             _this.enterCode = true;

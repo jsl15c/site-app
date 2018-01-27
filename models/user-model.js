@@ -25,8 +25,15 @@ const userSchema = new Schema (
     required:true
   },
   otherType: {
+    type:String
+  },
+  channelType: {
     type:String,
-    default:'other'
+    default:'search',
+    required:true
+  },
+  otherChannel: {
+    type:String
   },
   emailCode:{
     type:String

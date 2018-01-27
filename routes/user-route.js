@@ -24,7 +24,7 @@ router.get('/list', (req, res, next) => {
 // POST signup
 router.post('/signup', (req, res, next) => {
   if(!req.body.firstName || !req.body.lastName||
-     !req.body.email || !req.body.userType) {
+     !req.body.email || !req.body.userType || !req.body.channelType) {
        res.status(400).json({message:'All fields are required'});
        console.log('asdasdasd');
        return;
@@ -61,6 +61,8 @@ router.post('/signup', (req, res, next) => {
         password:hashedPassword,
         userType:req.body.userType,
         otherType:req.body.otherType,
+        channelType:req.body.channelType,
+        otherChannel:req.body.otherChannel,
         emailCode:randomDigits()
       });
       newUser.save((err) => {
@@ -70,7 +72,7 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
-        sendText(newUser.email);
+        sendText(newUser.email, newUser.userType, newUser.channelType);
         sendMail(newUser.email, newUser.emailCode);
         newUser.password = undefined;
         // send users info to front end except password ^
@@ -233,7 +235,7 @@ function sendMail(email, code) {
   });
 }
 
-function sendText(email) {
+function sendText(email, type, channel) {
 console.log(email);
 
   // Twilio Credentials
@@ -252,7 +254,8 @@ UserModel.find((err, userList) => {
     to: process.env.MY_NUMBER,
     from: process.env.FROM_NUMBER,
     body: "\n New subscriber: " + email + "\n" +
-    "Total: " + userList.length + "\n",
+    "User Type: " + type + "\n" +
+    "Channel: " + channel + "\n"
   },
   function(err, message) {
     if (err) {
