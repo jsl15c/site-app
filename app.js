@@ -20,6 +20,8 @@ mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
+app.disable('x-powered-by');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -52,6 +54,12 @@ app.use(cors({
   credentials:true,
   origin:['http://localhost:4200']
 }));
+
+// hides tech stack
+app.use(function (req, res, next) {
+  res.removeHeader("X-Powered-By");
+  next();
+});
 
 // THIS MIDDELWARE CREATES THE "currentUser" varaivable for ALL views
 //    check if the user is loggged in
