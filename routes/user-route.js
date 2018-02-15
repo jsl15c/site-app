@@ -11,7 +11,7 @@ const UserModel = require('../models/user-model');
 const mailConfig = require('../config/nodemailer-config.js');
 
 // GET all users
-router.get('/list', (req, res, next) => {
+router.get('/list/', (req, res, next) => {
   UserModel.find((err, userList) => {
     if (err) {
       res.json(err);
