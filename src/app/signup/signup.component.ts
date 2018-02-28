@@ -15,6 +15,9 @@ export class SignupComponent implements OnInit {
   email:string;
   password:string;
   userType:string = 'patient';
+  channelType:string = 'search';
+  otherType:string;
+  otherChannel:string;
   emailCode:string;
   errorMsg:string;
   isPatient:boolean = true;
@@ -23,7 +26,8 @@ export class SignupComponent implements OnInit {
   enterCode:boolean = false;
   verified:boolean = false;
 
-  types:any[] = ['doctor', 'patient', 'practice', 'investor'];
+  types:any[] = ['doctor', 'patient', 'wellness professional', 'investor'];
+  channels:any[] = ['word of mouth', 'search', 'social media'];
 
 
   constructor(
@@ -48,12 +52,15 @@ export class SignupComponent implements OnInit {
 
   signup() {
     this.userService.signup(this.firstName, this.lastName,
-      this.email, this.userType, this.password)
+      this.email, this.userType, this.channelType, this.otherType, this.otherChannel, this.password)
       .then((resultFromApi) => {
         this.firstName = "";
         this.lastName = "";
         this.email = "";
         this.userType = "";
+        this.channelType = "";
+        this.otherType = "";
+        this.otherChannel = "";
         this.password = "";
         this.errorMsg = "";
         this.enterCode = true;

@@ -17,7 +17,7 @@ export class UserService {
 
   // POST signup
   //  an argument for each req.body in API route
-  signup(firstName, lastName, email, userType, password) {
+  signup(firstName, lastName, email, userType, channelType, otherType, otherChannel, password) {
     return this.myHttp
       .post(
         environment.apiBase + '/user-api/signup',
@@ -27,7 +27,10 @@ export class UserService {
           lastName:lastName,
           email:email,
           password:password,
-          userType:userType
+          userType:userType,
+          otherType:otherType,
+          channelType:channelType,
+          otherChannel:otherChannel
         },
         // send cookies across domains
         {withCredentials:true}

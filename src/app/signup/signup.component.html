@@ -1,6 +1,5 @@
 <div class="row">
   <h2>Join the wait list!</h2>
-  <span>{{2000 - userService.allUsers.length}} spots left!</span>
   <div class="head-line"></div>
   <div class="signup">
     <form *ngIf="showForm" [ngClass]="{fadeIn:isLoaded}">
@@ -23,7 +22,7 @@
       <select [(ngModel)]="userType" id="userType" name="userType">
         <option value="patient">Patient</option>
         <option value="doctor">Doctor</option>
-        <option value="practice">Wellness Professional</option>
+        <option value="wellness professional">Wellness Professional</option>
         <option value="investor">Investor</option>
         <option value="other">Other</option>
       </select>
@@ -32,6 +31,20 @@
         <label>If other, please specify:</label>
         <input id="otherType"
         [(ngModel)]="otherType" name="otherType"/>
+      </div>
+
+      <h4>How did you find us?</h4>
+      <select [(ngModel)]="channelType" id="channelType" name="channelType">
+        <option value="word of mouth">Word of Mouth</option>
+        <option value="search">Search</option>
+        <option value="social media">Social Media</option>
+        <option value="other">Other</option>
+      </select>
+
+      <div *ngIf="!(channels.indexOf(channelType) > -1)">
+        <label>If other, please specify:</label>
+        <input id="otherChannel"
+        [(ngModel)]="otherChannel" name="otherChannel"/>
       </div>
 
       <!-- <div [ngClass]="{selected:isPatient}"
