@@ -17,6 +17,10 @@ router.get('/list/', (req, res, next) => {
       res.json(err);
       return;
     }
+    else if (!req.user || req.user.userType != 'admin') {
+      res.json("users not available");
+      return;
+    }
     res.status(200).json(userList);
   });
 });
