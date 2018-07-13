@@ -3,12 +3,19 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 const validator    = require('email-validator');
+const fs = require('fs');
+const stream = require('stream');
 const router = express.Router();
 require('dotenv').config();
 
 const UserModel = require('../models/user-model');
 
 const mailConfig = require('../config/nodemailer-config.js');
+
+// email templates for signup/verification
+const investorEmail = './email-templates/investor.html';
+const patientEmail = './email-templates/patient.html';
+const verifyEmail = './email-templates/verify.html';
 
 // GET all users
 router.get('/list/', (req, res, next) => {
@@ -33,8 +40,6 @@ router.post('/signup', (req, res, next) => {
        console.log('asdasdasd');
        return;
   }
-  console.log(validator.validate("test@email.com"));
-  console.log(validator.validate("akdsflkasjhd"));
   UserModel.findOne(
     {email:req.body.email},
     (err, user) => {
@@ -76,8 +81,8 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
-        sendText(newUser.email, newUser.userType, newUser.channelType);
-        sendMail(newUser.email, newUser.emailCode);
+        // sendText(newUser.email, newUser.userType, newUser.channelType);
+        sendMail(newUser);
         newUser.password = undefined;
         // send users info to front end except password ^
         res.status(200).json(newUser);
@@ -144,7 +149,6 @@ router.post('/login', (req, res, next) => {
       req.login(user, (err) => {
         if (err) {
           console.log('third');
-          console.log(user);
           console.log(err);
           res.status(500).json({message:'Session save error'});
           return;
@@ -156,8 +160,8 @@ router.post('/login', (req, res, next) => {
         }
         user.password = undefined;
         // everything works
-        console.log(req.user.firstName);
         res.status(200).json(user);
+        return;
       });
     });
     authenticateFunction(req, res, next);
@@ -216,18 +220,48 @@ function randomDigits() {
   return numStr;
 }
 
-function sendMail(email, code) {
+function insertDataIntoTemplate(template) {
+
+}
+
+function getEmailType(user) {
+  let subject = '', html = '';
+  if (user.verified) {
+    subject = 'EMDR VR Update';
+    switch(user.userType) {
+      case 'patient':
+        html = patientEmail;
+        break;
+      case 'investor':
+        html = investorEmail;
+        break;
+      case 'other':
+        html = investorEmail;
+        break;
+    }
+  } else {
+    subject = 'EMDR VR Verification';
+    html = '';
+  }
+  return [subject, html];
+}
+
+function sendMail(user) {
+  let subject = getEmailType(user)[0];
+  let template = getEmailType(user)[1];
+  console.log('😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀');
+  console.log(template);
+  console.log(subject);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport(mailConfig);
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"EMDR VR" <jarrod@emdrvr.com>', // sender address
-    to: email,
-    subject: 'Email Verification', // Subject line
-    text: code // plain text body
-    // html: '<b>Hello world?</b>' // html body
+    from: '"Jarrod, EMDR VR" <jarrod@emdrvr.com>', // sender address
+    to: user.email,
+    subject: subject, // Subject line
+    // text: code // plain text body
+    html: template  // html body
   };
-
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -240,7 +274,6 @@ function sendMail(email, code) {
 }
 
 function sendText(email, type, channel) {
-console.log(email);
 
   // Twilio Credentials
 let accountSid = process.env.ACCOUNT_NUM;
@@ -258,7 +291,7 @@ UserModel.find((err, userList) => {
     to: process.env.MY_NUMBER,
     from: process.env.FROM_NUMBER,
     body: "\n New subscriber: " + email + "\n" +
-    "User Type: " + type + "\n" +
+    "Type: " + type + "\n" +
     "Channel: " + channel + "\n"
   },
   function(err, message) {
