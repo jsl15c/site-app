@@ -81,9 +81,9 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
-        // sendText(newUser.email, newUser.userType, newUser.channelType);
-        sendMail(newUser);
         newUser.password = undefined;
+        sendText(newUser.email, newUser.userType, newUser.channelType);
+        sendMail(newUser);
         // send users info to front end except password ^
         res.status(200).json(newUser);
       });
@@ -220,9 +220,11 @@ function randomDigits() {
   return numStr;
 }
 
-function insertDataIntoTemplate(file, data) {
-  let compiledTemplate = ejs.compile(file);
-  return compiledTemplate(data);
+function insertDataIntoTemplate(file, userData) {
+  return ejs.renderFile(file, userData, (err, str) => {
+    if (err) throw err;
+    return str;
+  });
 }
 
 function getEmailAndUserData(user) {
@@ -253,25 +255,23 @@ function getEmailAndUserData(user) {
 function sendMail(user) {
   let subject = getEmailAndUserData(user).subject;
   let templateFile = getEmailAndUserData(user).file;
-  let finalTemplate = insertDataIntoTemplate(templateFile, user);
-  console.log('😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀');
-  console.log(finalTemplate);
+  let templateWithData = insertDataIntoTemplate(templateFile, user);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport(mailConfig);
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"Jarrod, EMDR VR" <jarrod@emdrvr.com>', // sender address
+    from: '"EMDR VR" <jarrod@emdrvr.com>', // sender address
     to: user.email,
     subject: subject, // Subject line
     // text: code // plain text body
-    html: finalTemplate  // html body
+    html: templateWithData  // html body
   };
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
       return console.log(error);
     }
-    console.log('Message sent: %s', info.messageId);
+    console.log('Message sent: %s', info.messages);
     // Preview only available when sending through an Ethereal account
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
