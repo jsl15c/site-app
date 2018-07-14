@@ -81,6 +81,7 @@ router.post('/signup', (req, res, next) => {
           res.status(500).json({message:'User server error'});
           return;
         }
+        console.log(newUser.emailCode);
         newUser.password = undefined;
         sendText(newUser.email, newUser.userType, newUser.channelType);
         sendMail(newUser);
@@ -106,8 +107,6 @@ router.post('/verify', (req, res, next) => {
           return;
         }
         if (user) {
-          console.log('😃 😃 😃 😃 😃 😃 😃 😃');
-          console.log(user);
           user.verified = true;
           user.save((err) => {
             if (err) {
@@ -118,6 +117,8 @@ router.post('/verify', (req, res, next) => {
             console.log(' 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘');
             console.log(user);
             user.password = undefined;
+            user.emailCode = null;
+            sendMail(user);
             // send users info to front end except password ^
             res.status(200).json(user);
           });
@@ -230,7 +231,7 @@ function insertDataIntoTemplate(file, userData) {
 function getEmailAndUserData(user) {
   let subject = '', file = '';
   if (user.verified) {
-    subject = 'EMDR VR Update';
+    subject = 'Welcome, ' + `${user.firstName}`;
     switch(user.userType) {
       case 'patient':
         file = patientEmail;
