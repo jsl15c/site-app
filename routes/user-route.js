@@ -229,9 +229,10 @@ function insertDataIntoTemplate(file, userData) {
 }
 
 function getEmailAndUserData(user) {
-  let subject = '', file = '';
+  let subject = '', file = '', from='';
   if (user.verified) {
     subject = 'Welcome, ' + `${user.firstName}`;
+    from = 'Jarrod Luca';
     switch(user.userType) {
       case 'patient':
         file = patientEmail;
@@ -244,24 +245,27 @@ function getEmailAndUserData(user) {
         break;
     }
   } else {
+    from = 'EMDR VR';
     subject = 'EMDR VR Verification';
     file = verifyEmail;
   }
   return {
     'subject':subject,
-    'file':file
+    'file':file,
+    'from':from
   };
 }
 
 function sendMail(user) {
   let subject = getEmailAndUserData(user).subject;
+  let from = getEmailAndUserData(user).from;
   let templateFile = getEmailAndUserData(user).file;
   let templateWithData = insertDataIntoTemplate(templateFile, user);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport(mailConfig);
   // setup email data with unicode symbols
   let mailOptions = {
-    from: '"EMDR VR" <jarrod@emdrvr.com>', // sender address
+    from: `"${from}" <jarrod@emdrvr.com>`, // sender address
     to: user.email,
     subject: subject, // Subject line
     // text: code // plain text body
