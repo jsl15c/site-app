@@ -118,7 +118,9 @@ router.post('/verify', (req, res, next) => {
             console.log(user);
             user.password = undefined;
             user.emailCode = null;
-            sendMail(user);
+            if (user.userType == 'investor' || user.userType == 'patient') {
+              sendMail(user);
+            }
             // send users info to front end except password ^
             res.status(200).json(user);
           });
@@ -238,9 +240,6 @@ function getEmailAndUserData(user) {
         file = patientEmail;
         break;
       case 'investor':
-        file = investorEmail;
-        break;
-      case 'other':
         file = investorEmail;
         break;
     }
