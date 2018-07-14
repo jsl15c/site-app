@@ -4,7 +4,7 @@ const passport = require('passport');
 const nodemailer = require('nodemailer');
 const validator    = require('email-validator');
 const fs = require('fs');
-const stream = require('stream');
+const ejs = require('ejs');
 const router = express.Router();
 require('dotenv').config();
 
@@ -220,38 +220,42 @@ function randomDigits() {
   return numStr;
 }
 
-function insertDataIntoTemplate(template) {
-
+function insertDataIntoTemplate(file, data) {
+  let compiledTemplate = ejs.compile(file);
+  return compiledTemplate(data);
 }
 
-function getEmailType(user) {
-  let subject = '', html = '';
+function getEmailAndUserData(user) {
+  let subject = '', file = '';
   if (user.verified) {
     subject = 'EMDR VR Update';
     switch(user.userType) {
       case 'patient':
-        html = patientEmail;
+        file = patientEmail;
         break;
       case 'investor':
-        html = investorEmail;
+        file = investorEmail;
         break;
       case 'other':
-        html = investorEmail;
+        file = investorEmail;
         break;
     }
   } else {
     subject = 'EMDR VR Verification';
-    html = '';
+    file = verifyEmail;
   }
-  return [subject, html];
+  return {
+    'subject':subject,
+    'file':file
+  };
 }
 
 function sendMail(user) {
-  let subject = getEmailType(user)[0];
-  let template = getEmailType(user)[1];
+  let subject = getEmailAndUserData(user).subject;
+  let templateFile = getEmailAndUserData(user).file;
+  let finalTemplate = insertDataIntoTemplate(templateFile, user);
   console.log('😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀');
-  console.log(template);
-  console.log(subject);
+  console.log(finalTemplate);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport(mailConfig);
   // setup email data with unicode symbols
@@ -260,7 +264,7 @@ function sendMail(user) {
     to: user.email,
     subject: subject, // Subject line
     // text: code // plain text body
-    html: template  // html body
+    html: finalTemplate  // html body
   };
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
