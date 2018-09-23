@@ -17,6 +17,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
+import { React360Component } from './react360/react360.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DoctorComponent } from './doctor/doctor.component';
     SignupComponent,
     LoginComponent,
     AdminComponent,
-    DoctorComponent
+    DoctorComponent,
+    React360Component
   ],
   imports: [
     BrowserModule,
