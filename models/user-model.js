@@ -43,7 +43,27 @@ const userSchema = new Schema (
   verified: {
     type:Boolean,
     default:false
-  }
+  },
+  settings: {
+    speed:{
+      type:Number
+    },
+    useExposure: {
+      type:Boolean
+    }
+  },
+  sessionData: [
+    {
+      iteration:{
+        type:Number,
+        suds:[
+          {
+            type:Number
+          }
+        ],
+      }
+    }
+  ]
 },
 {
   timestamps:true
