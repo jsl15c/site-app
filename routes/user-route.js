@@ -52,11 +52,11 @@ router.post('/signup', (req, res, next) => {
         return;
       }
       else if (user) {
-        res.status(401).json({message:'Email is already subscribed'});
+        res.status(400).json({message:'Email is already subscribed'});
         return;
       }
       else if (!validator.validate(req.body.email)) {
-        res.status(401).json({message:'Please enter a valid email'});
+        res.status(400).json({message:'Please enter a valid email'});
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -80,12 +80,9 @@ router.post('/signup', (req, res, next) => {
       });
       newUser.save((err) => {
         if (err) {
-          console.log(err);
-          console.log(newUser);
           res.status(500).json({message:'User server error'});
           return;
         }
-        console.log(newUser.emailCode);
         newUser.password = undefined;
         sendText(newUser.email, newUser.userType, newUser.channelType);
         sendMail(newUser);
@@ -99,7 +96,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/verify', (req, res, next) => {
   if (req.body.emailCode.length != 6) {
-    res.status(401).json({message:'The code is missing a few numbers'});
+    res.status(400).json({message:'The code is missing a few numbers'});
     return;
   }
   else {
@@ -107,7 +104,7 @@ router.post('/verify', (req, res, next) => {
       {emailCode:req.body.emailCode},
       (err, user) => {
         if (err) {
-          res.status(401).json({message:'The code is incorrect. Please try again.'});
+          res.status(400).json({message:'The code is incorrect. Please try again.'});
           return;
         }
         if (user) {
@@ -145,7 +142,7 @@ router.post('/login', (req, res, next) => {
       }
       // login failedil
       if (!user) {
-        res.status(401).json(strategyInfo);
+        res.status(400).json(strategyInfo);
         return;
       } else if (user.userType !== 'admin') {
         res.status(401).json('you are not authorized access');
