@@ -24,12 +24,14 @@ router.get('/list/', (req, res, next) => {
         res.json(err);
         return;
       } else {
-        if (req.user && req.user.userType === 'admin') {
-          res.status(200).json(userList);
-          return;
-        } else {
-          res.status(401).json('You are not authorized.')
-          return;
+        if (req.user) {
+          if(req.user.userType === 'admin') {
+            res.status(200).json(userList);
+            return;
+          } else {
+            res.status(401).json('You are not authorized.')
+            return;
+          }
         }
       }
     }); 
