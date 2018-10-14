@@ -19,25 +19,27 @@ const verifyEmail = './email-templates/verify.html';
 
 // GET all users
 router.get('/list/', (req, res, next) => {
-  UserModel.find((err, userList) => {
-    if (err) {
-      res.json(err);
-      return;
-    }
-    else if (!req.user || req.user.userType != 'admin') {
-      res.json("users not available");
-      return;
-    }
-    res.status(200).json(userList);
-  });
+    UserModel.find((err, userList) => {
+      if (err) {
+        res.json(err);
+        return;
+      } else {
+        if (req.user && req.user.userType === 'admin') {
+          res.status(200).json(userList);
+          return;
+        } else {
+          res.status(401).json('You are not authorized.')
+          return;
+        }
+      }
+    }); 
 });
 
 // POST signup
 router.post('/signup', (req, res, next) => {
   if(!req.body.firstName || !req.body.lastName||
      !req.body.email || !req.body.userType || !req.body.channelType) {
-       res.status(400).json({message:'All fields are required'});
-       console.log('asdasdasd');
+       res.status(401).json({message:'All fields are required'});
        return;
   }
   UserModel.findOne(
@@ -48,11 +50,11 @@ router.post('/signup', (req, res, next) => {
         return;
       }
       else if (user) {
-        res.status(400).json({message:'Email is already subscribed'});
+        res.status(401).json({message:'Email is already subscribed'});
         return;
       }
       else if (!validator.validate(req.body.email)) {
-        res.status(400).json({message:'Please enter a valid email'});
+        res.status(401).json({message:'Please enter a valid email'});
         return;
       }
       const salt = bcrypt.genSaltSync(10);
@@ -95,7 +97,7 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/verify', (req, res, next) => {
   if (req.body.emailCode.length != 6) {
-    res.status(400).json({message:'The code is missing a few numbers'});
+    res.status(401).json({message:'The code is missing a few numbers'});
     return;
   }
   else {
@@ -103,19 +105,16 @@ router.post('/verify', (req, res, next) => {
       {emailCode:req.body.emailCode},
       (err, user) => {
         if (err) {
-          res.status(400).json({message:'The code is incorrect. Please try again.'});
+          res.status(401).json({message:'The code is incorrect. Please try again.'});
           return;
         }
         if (user) {
           user.verified = true;
           user.save((err) => {
             if (err) {
-              console.log(err);
               res.status(500).json({message:'User server error'});
               return;
             }
-            console.log(' 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘 🚘');
-            console.log(user);
             user.password = undefined;
             user.emailCode = null;
             if (user.userType == 'investor' || user.userType == 'patient') {
@@ -135,39 +134,48 @@ router.post('/verify', (req, res, next) => {
 // POST login
 // passport.authenticate redirects (API should not)
 router.post('/login', (req, res, next) => {
+
   const authenticateFunction =
     passport.authenticate('user', (err, user, strategyInfo) => {
       if(err) {
-        console.log('first');
         res.status(500).json({message:'Unknown login error'});
         return;
       }
-      // login failed
+      // login failedil
       if (!user) {
-        console.log('second');
         res.status(401).json(strategyInfo);
         return;
-      }
-      // login success
-      req.login(user, (err) => {
-        if (err) {
-          console.log('third');
-          console.log(err);
-          res.status(500).json({message:'Session save error'});
-          return;
-        }
-        else if (user.userType != 'admin') {
-          console.log('fourth');
-          res.status(400).json({message:'You are not an admin'});
-          return;
-        }
-        user.password = undefined;
-        // everything works
-        res.status(200).json(user);
+      } else if (user.userType !== 'admin') {
+        res.status(401).json('you are not authorized access');
+        sendText()
         return;
-      });
+      } else {
+        // login success
+        req.login(user, (err) => {
+          if (err) {
+            res.status(500).json({message:'Session save error'});
+            return;
+          } else {
+            user.password = undefined;
+            // everything works
+            res.status(200).json(user);
+            return;
+          }
+        });
+      }
     });
     authenticateFunction(req, res, next);
+});
+
+
+router.get('/logout', function (req, res) {
+  if (req.user) {
+    req.logout();
+    res.status(200).json('successfully logged out');
+  } else {
+    res.status(200).json('you are not logged in');
+  }
+  return;
 });
 
 router.get('/checklogin', (req, res, next) => {
@@ -203,11 +211,10 @@ router.post('/delete/:myId', (req, res, next) => {
         if (err) {
           // next(err);
           res.status(500).json({message:'Find'});
-          console.log(patientEntry);
           return;
         }
         if (!patientEntry) {
-          res.status(400).json({message:'patient does not exist'});
+          res.status(401).json({message:'patient does not exist'});
           return;
         }
         res.status(200).json({message:patientEntry.firstName + ' deleted'});
@@ -273,15 +280,12 @@ function sendMail(user) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return console.log(error);
+      return;
     }
-    console.log('Message sent: %s', info.messages);
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   });
 }
 
-function sendText(email, type, channel) {
+function sendText(email, type, channel, isValid) {
 
   // Twilio Credentials
 let accountSid = process.env.ACCOUNT_NUM;
@@ -289,12 +293,6 @@ let authToken = process.env.AUTH_TOKEN;
 
 //require the Twilio module and create a REST client
 let client = require('twilio')(accountSid, authToken);
-
-UserModel.find((err, userList) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
   client.messages.create({
     to: process.env.MY_NUMBER,
     from: process.env.FROM_NUMBER,
@@ -304,16 +302,10 @@ UserModel.find((err, userList) => {
   },
   function(err, message) {
     if (err) {
-      console.log(err);
       return;
     }
-    console.log(message.sid);
     return;
   });
-});
-
-
-
 }
 
 module.exports = router;
