@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { React360Component } from './react360.component';
+import { VrComponent } from './vr.component';
 
-describe('React360Component', () => {
-  let component: React360Component;
-  let fixture: ComponentFixture<React360Component>;
+describe('VrComponent', () => {
+  let component: VrComponent;
+  let fixture: ComponentFixture<VrComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ React360Component ]
+      declarations: [ VrComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(React360Component);
+    fixture = TestBed.createComponent(VrComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

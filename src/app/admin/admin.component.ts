@@ -16,17 +16,16 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.checkLogin();
-    this.list();
   }
 
   checkLogin() {
     this.userService.checklogin()
     .then((resultFromApi) => {
       // this.isLoggedOut = false;
-      console.log(resultFromApi);
       if (resultFromApi.userType === "admin") {
-        this.router.navigate(['/admin']);
         this.userService.currentUser = resultFromApi;
+        this.list();
+        this.router.navigate(['/admin']);
         return;
       }
   })
@@ -41,8 +40,8 @@ export class AdminComponent implements OnInit {
 list() {
   this.userService.list()
   .then((resultFromApi) => {
-    console.log('result ' + resultFromApi);
     this.userService.allUsers = resultFromApi;
+    return;
   })
   .catch((err) => {
     if (err) {
@@ -50,6 +49,14 @@ list() {
       return;
     }
   });
+}
+
+logout() {
+  this.userService.logout()
+  .then((result) => {
+    this.checkLogin();
+    return;
+  })
 }
 
 }

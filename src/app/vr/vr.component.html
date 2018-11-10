@@ -1,0 +1,18 @@
+<a-scene id="scene">
+  <a-entity camera look-controls>
+    <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -2" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+      material="color: black; shader: flat">
+    </a-entity>
+  </a-entity>
+
+  <a-box (click)="getSphereComponent()" position="3 0 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+    <a-sphere *ngIf="this.isSphere" position="0 0 -8" radius="1.25" color="rgba(100,100,255,1)"
+              animation="property: scale; dir: alternate; dur: 8000;
+              easing: easeInSine; loop: true; to:1.5 1.5 1.5"
+              animation__color="property: color; dir: alternate; dur: 8000;
+              easing: linear; loop: true; to: rgba(0,0,255,1)"
+    >
+    <a-text id="text" value="0" color="#fff" position="-0.05 0 2"></a-text>
+  </a-sphere>
+  <a-sky color="#ECECEC"></a-sky>
+</a-scene>

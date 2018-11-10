@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
+import { VrComponent } from './vr/vr.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'doctor',
     component: DoctorComponent
+  },
+  {
+    path: 'vr',
+    component: VrComponent
   }
 ];
 

@@ -86,4 +86,13 @@ export class UserService {
     .toPromise()
     .then(res => res.json());
   }
+
+  logout() {
+    return this.myHttp.get(
+      environment.apiBase + '/user-api/logout',
+      { withCredentials: true },
+    )
+    .toPromise()
+    .then(res => res.json());
+  }
 }

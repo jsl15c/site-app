@@ -33,15 +33,16 @@ login() {
     this.userService.currentUser = resultFromApi;
     this.userService.isLoggedOut = false;
     if (this.userService.currentUser.userType == 'admin') {
+      console.log(this.userService.currentUser);
       this.router.navigate(['/admin']);
-    }
-    else {
+    } else {
       this.router.navigate(['/']);
+      return;
     }
   })
   .catch((err) => {
     const parsedError = err.json();
-    console.log(parsedError + '🛑');
+    return;
   });
 }
 

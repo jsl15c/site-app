@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -17,8 +17,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
-import { React360Component } from './react360/react360.component';
-
+import { VrComponent } from './vr/vr.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,7 @@ import { React360Component } from './react360/react360.component';
     LoginComponent,
     AdminComponent,
     DoctorComponent,
-    React360Component
+    VrComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +41,7 @@ import { React360Component } from './react360/react360.component';
     FormsModule
   ],
   providers: [UserService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
