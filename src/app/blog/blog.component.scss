@@ -6,21 +6,34 @@
     text-align: center;
     margin-bottom:-5px;
   }
-  .post {
-
-    h3 {
-      letter-spacing:0;
+  .flex-container {
+    flex-direction: column-reverse;
+    @media screen and (min-width:600px) {
+      flex-direction: row-reverse;
     }
+    .post {
+      padding:20px;
+      &:first-child {
+        padding:20px 20px 20px 0;
+      }
+      &:last-child {
+        padding:20px 0px 20px 20px;
+      }
 
-    a {
-      border-bottom:2px solid rgb(221, 216, 109);
-      display: inline-block;
-      margin-bottom: 10px;
-    }
+      h3 {
+        letter-spacing:0;
+      }
 
-    img {
-      max-width: 400px;
-      width:100%;
+      a {
+        border-bottom:2px solid rgb(221, 216, 109);
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      img {
+        max-width: 400px;
+        width:100%;
+      }
     }
   }
 }

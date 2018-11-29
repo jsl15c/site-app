@@ -16,7 +16,7 @@ export class VrComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.timer();
+    // this.timer();
   }
 
   getSceneComponent() {
@@ -39,11 +39,11 @@ export class VrComponent implements OnInit {
     //   newSphere.setAttribute('position', `${this.num} 4 -6`);
     // }
     // newSphere.setAttribute('color',  `${color}`);
-    newSphere.setAttribute('transition', `0.5s ease-in`);
-    newSphere.setAttribute('radius', `${this.num}`);
-    sphereRoot.appendChild(newSphere);
-    this.getSceneComponent().appendChild(sphereRoot);
-    this.num++;
+    // newSphere.setAttribute('transition', `0.5s ease-in`);
+    // newSphere.setAttribute('radius', `${this.num}`);
+    // sphereRoot.appendChild(newSphere);
+    // this.getSceneComponent().appendChild(sphereRoot);
+    // this.num++;
     // this.colorNum += 50;
   }
 

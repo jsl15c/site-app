@@ -43,11 +43,11 @@ const routes: Routes = [
   {
     path: 'doctor',
     component: DoctorComponent
-  },
-  {
-    path: 'vr',
-    component: VrComponent
   }
+  // {
+  //   path: 'vr',
+  //   component: VrComponent
+  // }
 ];
 
 @NgModule({

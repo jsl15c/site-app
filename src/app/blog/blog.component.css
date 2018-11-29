@@ -1,0 +1,46 @@
+.row {
+  width: 80%;
+  margin: auto;
+}
+
+.row h2 {
+  text-align: center;
+  margin-bottom: -5px;
+}
+
+.row .flex-container {
+  flex-direction: column-reverse;
+}
+
+@media screen and (min-width: 600px) {
+  .row .flex-container {
+    flex-direction: row-reverse;
+  }
+}
+
+.row .flex-container .post {
+  padding: 20px;
+}
+
+.row .flex-container .post:first-child {
+  padding: 20px 20px 20px 0;
+}
+
+.row .flex-container .post:last-child {
+  padding: 20px 0px 20px 20px;
+}
+
+.row .flex-container .post h3 {
+  letter-spacing: 0;
+}
+
+.row .flex-container .post a {
+  border-bottom: 2px solid #ddd86d;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.row .flex-container .post img {
+  max-width: 400px;
+  width: 100%;
+}

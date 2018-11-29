@@ -1,18 +1,32 @@
 <a-scene id="scene">
+  <!-- assets -->
+  <a-assets>
+    <a-asset-item id="doctor" src="../assets/3dmodels/doctor/Doctor_01.gltf"></a-asset-item>
+    <!-- <a-asset-item id="doctorObject" src="../assets/3dmodels/doctor/Doctor_01.obj"></a-asset-item>
+    <a-asset-item id="doctorMaterial" src="../assets/3dmodels/doctor/Doctor_01.mtl"></a-asset-item> -->
+  </a-assets>
+  <!-- camera -->
   <a-entity camera look-controls>
-    <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 -2" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+    <a-entity cursor="fuse: true; fuseTimeout: 500" position="0 0 0" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
       material="color: black; shader: flat">
     </a-entity>
   </a-entity>
-
-  <a-box (click)="getSphereComponent()" position="3 0 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-    <a-sphere *ngIf="this.isSphere" position="0 0 -8" radius="1.25" color="rgba(100,100,255,1)"
-              animation="property: scale; dir: alternate; dur: 8000;
-              easing: easeInSine; loop: true; to:1.5 1.5 1.5"
-              animation__color="property: color; dir: alternate; dur: 8000;
-              easing: linear; loop: true; to: rgba(0,0,255,1)"
-    >
-    <a-text id="text" value="0" color="#fff" position="-0.05 0 2"></a-text>
-  </a-sphere>
-  <a-sky color="#ECECEC"></a-sky>
+  <!-- scene  -->
+  <a-sky color="rgba(100,100,255,0.5)"></a-sky>
+    <a-entity light="type:spot;target:#first;angle:10" position="0 0.25 0.1"></a-entity>
+    <a-entity light="type:ambient;intensity:0.7;color:#BBB"></a-entity>
+    <a-entity position="0 -0.07 -0.2" rotation="25 0 0">
+      <a-entity gltf-model="../assets/3dmodels/doctor/Doctor_01.gltf" scale="0.01 0.01 0.01" position="0 0 -0.2"></a-entity>
+          <a-entity id="first" gltf-model="../assets/3dmodels/doctor/Doctor_01.gltf" scale="0.01 0.01 0.01" position="0 0 0"></a-entity>
+            
+      <a-entity gltf-model="../assets/3dmodels/doctor/Doctor_01.gltf" scale="0.01 0.01 0.01" position="0.1 0 -0.1"></a-entity>
+      <a-entity gltf-model="../assets/3dmodels/doctor/Doctor_01.gltf" scale="0.01 0.01 0.01" position="-0.1 0 -0.1"></a-entity>    
+    </a-entity>
 </a-scene>
+<!-- animation="property: scale; dir: alternate; dur: 8000;
+easing: easeInSine; loop: true; to:1.5 1.5 1.5"
+animation__color="property: color; dir: alternate; dur: 8000;
+easing: linear; loop: true; to: rgba(0,0,255,1)" -->
+<script>
+
+</script>
