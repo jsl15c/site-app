@@ -202,6 +202,18 @@ router.post('/update/:myId', (req, res, next) => {
   );
 });
 
+router.post('/add/session', (req, res, next) => {
+  const newSession = new TherapyModel({
+    number: {
+      type:Number,
+    },
+    trauma:{
+      type:String,
+      required:true
+    }
+  })
+});
+
 // POST delete user
 router.post('/delete/:myId', (req, res, next) => {
   // console.log(req.params.myId);

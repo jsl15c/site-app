@@ -54,7 +54,7 @@ app.use(passport.session());
 
 app.use(cors({
   credentials:true,
-  origin:[CLIENT_URI]
+  origin:[process.env.CLIENT_URI]
 }));
 
 // hides tech stack
