@@ -20,22 +20,16 @@ const userSchema = new Schema (
     required:true
   },
   userType:{
-    type:String,
-    default:'patient',
-    required:true
+    type:String
   },
   otherType: {
-    type:String,
-    default:'n/a'
+    type:String
   },
   channelType: {
-    type:String,
-    default:'search',
-    required:true
+    type:String
   },
   otherChannel: {
-    type:String,
-    default:'n/a'
+    type:String
   },
   emailCode:{
     type:String

@@ -40,7 +40,7 @@ router.get('/list/', (req, res, next) => {
 // POST signup
 router.post('/signup', (req, res, next) => {
   if(!req.body.firstName || !req.body.lastName||
-     !req.body.email || !req.body.userType || !req.body.channelType) {
+     !req.body.email) {
        res.status(401).json({message:'All fields are required'});
        return;
   }
@@ -84,7 +84,7 @@ router.post('/signup', (req, res, next) => {
           return;
         }
         newUser.password = undefined;
-        sendText(newUser.email, newUser.userType, newUser.channelType);
+        // sendText(newUser.email, newUser.userType, newUser.channelType);
         sendMail(newUser);
         // send users info to front end except password ^
         res.status(200).json(newUser);
@@ -254,11 +254,8 @@ function getEmailAndUserData(user) {
     subject = 'Welcome, ' + `${user.firstName}`;
     from = 'Jarrod Luca';
     switch(user.userType) {
-      case 'patient':
+      case '':
         file = patientEmail;
-        break;
-      case 'investor':
-        file = investorEmail;
         break;
     }
   } else {
@@ -287,6 +284,25 @@ function sendMail(user) {
     subject: subject, // Subject line
     // text: code // plain text body
     html: templateWithData  // html body
+  };
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return;
+    }
+    sendEmailToAdmin(user);
+  });
+}
+
+function sendEmailToAdmin(user) {
+  let transporter = nodemailer.createTransport(mailConfig);
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: `<jarrod@emdrvr.com>`, // sender address
+    to: `<jarrod@emdrvr.com>`,
+    subject: 'New Sign Up', // Subject line
+    // text: code // plain text body
+    html: user.firstName + ' ' + user.lastName + 'signed up with ' + user.email  // html body
   };
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
