@@ -32,18 +32,18 @@ const routes: Routes = [
     path: 'signup',
     component: SignupComponent
   },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'admin',
-    component: AdminComponent
-  },
-  {
-    path: 'doctor',
-    component: DoctorComponent
-  }
+  // {
+  //   path: 'login',
+  //   component: LoginComponent
+  // },
+  // {
+  //   path: 'admin',
+  //   component: AdminComponent
+  // },
+  // {
+  //   path: 'doctor',
+  //   component: DoctorComponent
+  // }
   // {
   //   path: 'vr',
   //   component: VrComponent
