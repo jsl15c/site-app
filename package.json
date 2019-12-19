@@ -7,11 +7,15 @@
     "api": "nodemon ./bin/www"
   },
   "dependencies": {
+    "@angular-devkit/build-angular": "^0.10.0",
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
+    "@angular/forms": "^8.2.14",
     "@angular/http": "^7.2.15",
     "@angular/platform-browser": "^8.2.14",
+    "@angular/platform-browser-dynamic": "^8.2.14",
     "@angular/router": "^8.2.14",
+    "@types/jest": "^24.0.24",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
@@ -33,11 +37,12 @@
     "peerjs": "^1.1.0",
     "rxjs": "^6.5.3",
     "serve-favicon": "^2.5.0",
-    "socket.io": "^2.0.4",
-    "twilio": "^3.17.6",
     "zone.js": "^0.10.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.2"
+    "@angular/compiler": "^8.2.14",
+    "@angular/compiler-cli": "^8.2.14",
+    "nodemon": "^1.18.2",
+    "typescript": "^3.5.3"
   }
 }

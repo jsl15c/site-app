@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 // methods for AJAX for Http
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable()
 export class UserService {
 
-  isLoggedOut:boolean;
+  isLoggedOut:boolean; 
 
   currentUser: any = {};
 
   allUsers:any = [];
 
-  constructor(private myHttp: Http) { }
+  constructor(private myHttp: HttpClient) { }
 
   // POST signup
   //  an argument for each req.body in API route
@@ -36,7 +35,7 @@ export class UserService {
         {withCredentials:true}
       )
       .toPromise()
-      .then(res => res.json());
+      .then(res => res);
   }
 
   verify(emailCode) {
@@ -49,7 +48,7 @@ export class UserService {
         {withCredentials:true}
       )
       .toPromise()
-      .then(res => res.json());
+      .then(res => res);
   }
 
   // POST login
@@ -63,7 +62,7 @@ export class UserService {
       {withCredentials:true}
     )
     .toPromise()
-    .then(res => res.json());
+    .then(res => res);
   }
 
   // GET checklogin
@@ -74,7 +73,7 @@ export class UserService {
       {withCredentials:true},
     )
     .toPromise()
-    .then(res => res.json());
+    .then(res => res);
   }
 
   list() {
@@ -84,7 +83,7 @@ export class UserService {
       {withCredentials:true},
     )
     .toPromise()
-    .then(res => res.json());
+    .then(res => res);
   }
 
   logout() {
@@ -93,6 +92,6 @@ export class UserService {
       { withCredentials: true },
     )
     .toPromise()
-    .then(res => res.json());
+    .then(res => res);
   }
 }

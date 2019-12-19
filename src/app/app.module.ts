@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import {UserService} from './services/user.service';
 
@@ -17,7 +17,6 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
-import { VrComponent } from './vr/vr.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +30,12 @@ import { VrComponent } from './vr/vr.component';
     SignupComponent,
     LoginComponent,
     AdminComponent,
-    DoctorComponent,
-    VrComponent
+    DoctorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule
   ],
   providers: [UserService],

@@ -67,8 +67,8 @@ export class SignupComponent implements OnInit {
         this.showForm = false;
       })
       .catch((err) => {
-        const parsedError = err.json();
-        this.errorMsg = parsedError.message;
+        console.log(err);
+        this.errorMsg = err.message;
       });
     }
 
