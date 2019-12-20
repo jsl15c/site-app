@@ -11,9 +11,9 @@ export class PatientComponent implements OnInit {
   peer:any;
   conn:any;
   videoStream: any;
-  audioEl:any;
   showEmdr:boolean = false;
   isConnected:boolean = false;
+  audioEl:HTMLAudioElement;
 
   constructor() { }
 
@@ -39,8 +39,14 @@ export class PatientComponent implements OnInit {
         .then((stream) => {
           call.answer(stream); // Answer the call with an A/V stream.
           call.on('stream', (remoteStream) => {
-            document.getElementsByTagName('audio').srcObject = remoteStream
-            document.getElementsByTagName('audio').play()
+            if (!this.audioEl) {
+              let audio = document.createElement('audio');
+              audio.srcObject = remoteStream;
+              audio.play()
+              this.audioEl = audio;
+            } else {
+              this.audioEl.srcObject = remoteStream;
+            }
             // Show stream in some <video> element.
           });
         })

@@ -14,7 +14,7 @@ export class DoctorComponent implements OnInit {
   message:string;
   videoStream:any;
   localStream:any;
-  audioEl:any;
+  audioEl:HTMLAudioElement;
   
   constructor() { }
     
@@ -35,8 +35,14 @@ export class DoctorComponent implements OnInit {
       .then((stream) => {
         call.answer(stream); // Answer the call with an A/V stream.
         call.on('stream', (remoteStream) => {
-          document.getElementsByTagName('audio').srcObject = remoteStream
-          document.getElementsByTagName('audio').play()
+          if (!this.audioEl) {
+            let audio = document.createElement('audio');
+            audio.srcObject = remoteStream;
+            audio.play()
+            this.audioEl = audio;
+          } else {
+            this.audioEl.srcObject = remoteStream;
+          }
         });
       }) 
       .catch((err) => {
@@ -53,17 +59,23 @@ export class DoctorComponent implements OnInit {
         conn.send('Connected to doctor');
       });
       this.conn = conn;
-    // navigator.mediaDevices.getUserMedia({ video: false, audio: true })
-    //   .then((stream) => {
-    //     const call = this.peer.call('123', stream);
-    //     call.on('stream', (remoteStream) => {
-    //       document.getElementById('audio').srcObject = remoteStream
-    //       document.getElementById('audio').play()
-    //     });
-    //   }) 
-    //   .catch((err) => {
-    //     console.error('Failed to get local stream', err);
-    //   });
+    navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+      .then((stream) => {
+        const call = this.peer.call('123', stream);
+        call.on('stream', (remoteStream) => {
+          if (!this.audioEl) {
+            let audio = document.createElement('audio');
+            audio.srcObject = remoteStream;
+            audio.play()
+            this.audioEl = audio;
+          } else {
+            this.audioEl.srcObject = remoteStream;
+          }
+        });
+      }) 
+      .catch((err) => {
+        console.error('Failed to get local stream', err);
+      });
   }
 
   startEm() {

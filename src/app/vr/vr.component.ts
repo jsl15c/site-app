@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import aframe from 'aframe';
+// import aframe from 'aframe';
 import { PatientComponent } from '../patient/patient.component';
 
 @Component({
