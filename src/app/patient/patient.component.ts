@@ -18,9 +18,9 @@ export class PatientComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const peer = new Peer('123',{
-      host: 'localhost',
-      port: 3000,
+    const peer = new Peer('123', {
+      host: window.location.hostname,
+      port: (window.location.hostname == 'localhost') ? 3000 : 0,
       path: '/peer'
     })
     peer.on('connection', (conn) => {
