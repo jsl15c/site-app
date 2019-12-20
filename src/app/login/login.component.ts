@@ -35,6 +35,10 @@ login() {
     if (this.userService.currentUser.userType == 'admin') {
       console.log(this.userService.currentUser);
       this.router.navigate(['/admin']);
+    } else if (this.userService.currentUser.userType == 'doctor') {
+      this.router.navigate(['/doctor']);
+    } else if (this.userService.currentUser.userType == 'patient') {
+      this.router.navigate(['/patient']);
     } else {
       this.router.navigate(['/']);
       return;

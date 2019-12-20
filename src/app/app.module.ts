@@ -17,7 +17,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
-import { VrComponent } from './vr/vr.component';
+import { PatientComponent } from './patient/patient.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { VrComponent } from './vr/vr.component';
     LoginComponent,
     AdminComponent,
     DoctorComponent,
-    VrComponent
+    PatientComponent
   ],
   imports: [
     BrowserModule,

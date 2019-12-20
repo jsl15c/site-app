@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 // methods for AJAX for Http
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import { environment } from '../../environments/environment';
 
 @Injectable()
