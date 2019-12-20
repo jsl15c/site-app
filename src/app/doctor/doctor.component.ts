@@ -19,11 +19,19 @@ export class DoctorComponent implements OnInit {
   constructor() { }
     
   ngOnInit() {
-    const peer = new Peer('456',{
-      host: window.location.hostname,
-      port: (window.location.hostname == 'localhost') ? 3000 : 0,
-      path: '/peer'
-    })
+    let peer;
+    if (window.location.hostname == 'localhost') {
+      peer = new Peer('456', {
+        host: window.location.hostname,
+        port: (window.location.hostname == 'localhost') ? 3000 : 0,
+        path: '/peer'
+      })
+    } else {
+      peer = new Peer('456', {
+        host: window.location.hostname,
+        path: '/peer'
+      })
+    }
     peer.on('connection', (conn) => {
       conn.on('data', (data) => {
         // Will print 'hi!'
