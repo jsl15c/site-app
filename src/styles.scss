@@ -39,6 +39,13 @@ li {
   list-style-type: none;
 }
 
+input {
+  color:#000!important;
+  &::placeholder {
+    color:#000!important;
+  }
+}
+
 .col {
   padding:1rem;
   overflow: hidden;

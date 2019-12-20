@@ -36,7 +36,6 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.list();
   }
 
   selectUser() {
@@ -67,7 +66,6 @@ export class SignupComponent implements OnInit {
         this.showForm = false;
       })
       .catch((err) => {
-        console.log(err);
         this.errorMsg = err.message;
       });
     }
@@ -86,19 +84,8 @@ export class SignupComponent implements OnInit {
           this.router.navigate(['/']);
         })
         .catch((err) => {
-          const parsedError = err.json();
+          const parsedError = err.message;
           this.errorMsg = parsedError.message;
-        });
-      }
-
-      list() {
-        this.userService.list()
-        .then((result) => {
-          this.userService.allUsers = result;
-        })
-        .catch((err)=> {
-          const parsedError = err.json();
-          this.errorMsg = parsedError;
         });
       }
 }

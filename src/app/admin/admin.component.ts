@@ -21,13 +21,14 @@ export class AdminComponent implements OnInit {
   checkLogin() {
     this.userService.checklogin()
     .then((resultFromApi) => {
+      console.log(resultFromApi);
       // this.isLoggedOut = false;
-      if (resultFromApi.userType === "admin") {
-        this.userService.currentUser = resultFromApi;
-        this.list();
-        this.router.navigate(['/admin']);
+      // if (resultFromApi.userType === "admin") {
+        // this.userService.currentUser = resultFromApi;
+        // this.list();
+        // this.router.navigate(['/admin']);
         return;
-      }
+      // }
   })
   .catch((err) => {
     if(err) {

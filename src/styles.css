@@ -37,6 +37,14 @@ li {
   list-style-type: none;
 }
 
+input {
+  color: #000 !important;
+}
+
+input::placeholder {
+  color: #000 !important;
+}
+
 .col {
   padding: 1rem;
   overflow: hidden;

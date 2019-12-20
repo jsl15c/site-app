@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { DoctorComponent } from './doctor/doctor.component';
+import { PatientComponent } from './patient/patient.component';
 
 const routes: Routes = [
   {
@@ -31,18 +32,22 @@ const routes: Routes = [
     path: 'signup',
     component: SignupComponent
   },
-  // {
-  //   path: 'login',
-  //   component: LoginComponent
-  // },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'doctor',
+    component: DoctorComponent
+  },
+  {
+    path: 'patient',
+    component: PatientComponent
+  }
   // {
   //   path: 'admin',
   //   component: AdminComponent
   // },
-  // {
-  //   path: 'doctor',
-  //   component: DoctorComponent
-  // }
   // {
   //   path: 'vr',
   //   component: VrComponent

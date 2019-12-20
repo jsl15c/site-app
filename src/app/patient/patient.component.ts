@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import Peer from 'peerjs';
 
 @Component({
-  selector: 'app-doctor',
-  templateUrl: './doctor.component.html',
-  styleUrls: ['./doctor.component.min.css']
+  selector: 'app-patient',
+  templateUrl: './patient.component.html',
+  styleUrls: ['./patient.component.scss']
 })
-export class DoctorComponent implements OnInit {
+export class PatientComponent implements OnInit {
 
-  constructor(
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    const peer = new Peer('123')
-    const conn = peer.connect('456');
+    const peer = new Peer('456')
+    const conn = peer.connect('123');
     conn.on('open', () => {
       conn.send('Connected');
     });
@@ -25,6 +23,4 @@ export class DoctorComponent implements OnInit {
       });
     });
   }
-
-
 }

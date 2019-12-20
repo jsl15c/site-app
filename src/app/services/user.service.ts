@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class UserService {
 
-  isLoggedOut:boolean; 
+  isLoggedOut:boolean;
 
   currentUser: any = {};
 
