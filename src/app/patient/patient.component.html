@@ -1,3 +1,11 @@
-<p>
-  patient works!
-</p>
+<h2>patient dashboard</h2>
+<div>
+  <p *ngIf="!isConnected">Waiting on doctor to connect . . .</p>
+</div>
+<audio id="audio" autoplay>
+  Your browser does not support the
+  <code>audio</code> element.
+</audio>
+<!-- <div *ngIf="isConnected">
+  <app-vr></app-vr>
+</div> -->
