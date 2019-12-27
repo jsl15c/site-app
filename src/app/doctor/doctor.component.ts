@@ -22,14 +22,16 @@ export class DoctorComponent implements OnInit {
     let peer;
     if (window.location.hostname == 'localhost') {
       peer = new Peer('456', {
-        host: window.location.hostname,
+        host: '/',
         port: (window.location.hostname == 'localhost') ? 3000 : 0,
-        path: '/peer'
+        path: '/peer',
+        debug:2
       })
     } else {
       peer = new Peer('456', {
-        host: window.location.hostname,
-        path: '/peer'
+        host: '/',
+        path: '/peer',
+        debug: 2
       })
     }
     peer.on('connection', (conn) => {
